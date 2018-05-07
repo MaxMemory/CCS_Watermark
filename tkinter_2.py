@@ -3,18 +3,29 @@ import tkinter as tk
 from tkinter.filedialog import askopenfilename
 from PIL import Image
 
+#IMAGE_1 = Image.open('images/img1.png')
+#IMAGE_2 = Image.open('images/img2.png')
+#IMAGE_1.show()
+#IMAGE_1.paste(IMAGE_2, (0, 0), IMAGE_2)
+#IMAGE_1.save('images/img_output.png')
 
 def filedialog_input():
     filepath = askopenfilename(filetypes=(("Images files", "*.png;*.jpg"),
                                            ("Images files", "*.png;*.jpg") ))
     etr1.insert(0, filepath)
-    #return filepath
+    print('hello world1')
 
 def filedialog_watermark():
     filepath = askopenfilename(filetypes=(("Images files", "*.png;*.jpg"),
                                            ("Images files", "*.png;*.jpg") ))
     etr2.insert(0, filepath)
-    #return filepath
+    print('hello world2')
+
+def calculate_watermark():
+    #img = tk.PhotoImage(file="images/img2.png")
+   canvas.create_image(slider_wx,slider_wy, image=img)
+    print('hello world')
+    print(type(slider_wx))
 
 # 240P resolution
 canvas_width = 426
@@ -29,9 +40,9 @@ canvas.create_rectangle(0, 0, canvas_width, canvas_height, fill="#888888")
 canvas.place(x=20, y=20)
 
 
-#img = tk.PhotoImage(file="images/img1.png")
-#canvas.create_image(20,20, image=img)
 
+#canvas.create_image(20,20, image=img)
+img = tk.PhotoImage(file="images/img2.png")
 #Create Input Text
 text1 = tk.Label(text='Image:', font=(8))
 text1.place(x=20, y=267)
@@ -81,7 +92,7 @@ slider_tx.place(x=340, y=387)
 slider_ty.place(x=340, y=427)
 
 # Create Add Watermake Button
-btn3 = tk.Button(text='add watermark', font=(8))
+btn3 = tk.Button(text='add watermark', font=(8), command=calculate_watermark)
 btn3.place(x=170, y=520)
 
 # Create Image

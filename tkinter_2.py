@@ -10,22 +10,57 @@ from PIL import Image
 #IMAGE_1.save('images/img_output.png')
 
 def filedialog_input():
-    filepath = askopenfilename(filetypes=(("Images files", "*.png;*.jpg"),
+    file_input = askopenfilename(filetypes=(("Images files", "*.png;*.jpg"),
                                            ("Images files", "*.png;*.jpg") ))
-    etr1.insert(0, filepath)
+    etr1.insert(0, file_input)
     print('hello world1')
 
 def filedialog_watermark():
-    filepath = askopenfilename(filetypes=(("Images files", "*.png;*.jpg"),
+    file_WM = askopenfilename(filetypes=(("Images files", "*.png;*.jpg"),
                                            ("Images files", "*.png;*.jpg") ))
-    etr2.insert(0, filepath)
+    etr2.insert(0, file_WM)
     print('hello world2')
 
 def calculate_watermark():
+    global wx, wy, canvas
+    # Reset canvas
+    canvas.create_rectangle(0, 0, canvas_width, canvas_height, fill='#888888')
+
     #img = tk.PhotoImage(file="images/img2.png")
-   canvas.create_image(slider_wx,slider_wy, image=img)
-    print('hello world')
-    print(type(slider_wx))
+    canvas.create_image(wx,wy, image=img)
+    print('wx = %d, wy = %d'%(wx, wy))
+
+def get_wx(val):
+    global wx
+    wx = val
+    print(wx)
+    text_input = etr3.get()
+    print(text_input)
+
+def get_wy(val):
+    global wy
+    wy = val
+    print(wy)
+
+def get_tx(val):
+    global tx
+    tx = val
+    print(tx)
+
+def get_ty(val):
+    global ty
+    ty = val
+    print(ty)
+    
+
+
+file_input = ''
+file_WM = ''
+text_input = ''
+wx = 400
+wy = 400
+tx = 0
+ty = 0
 
 # 240P resolution
 canvas_width = 426
@@ -36,13 +71,13 @@ window = tk.Tk()
 window.title('test')
 window.geometry('470x580')
 canvas = tk.Canvas( width=canvas_width, height=canvas_height)
-canvas.create_rectangle(0, 0, canvas_width, canvas_height, fill="#888888")
+canvas.create_rectangle(0, 0, canvas_width, canvas_height, fill='#888888')
 canvas.place(x=20, y=20)
 
 
 
 #canvas.create_image(20,20, image=img)
-img = tk.PhotoImage(file="images/img2.png")
+img = tk.PhotoImage(file='images/img2.png')
 #Create Input Text
 text1 = tk.Label(text='Image:', font=(8))
 text1.place(x=20, y=267)
@@ -82,10 +117,10 @@ text3.place(x=20, y=387)
 text4 = tk.Label(text='Text pos:', font=(8))
 text4.place(x=260, y=387)
 #Create Slider
-slider_wx = tk.Scale(from_=0, to=426, orient=tk.HORIZONTAL)
-slider_wy = tk.Scale(from_=0, to=240, orient=tk.HORIZONTAL)
-slider_tx = tk.Scale(from_=0, to=426, orient=tk.HORIZONTAL)
-slider_ty = tk.Scale(from_=0, to=240, orient=tk.HORIZONTAL)
+slider_wx = tk.Scale(window, from_=0, to=100, orient=tk.HORIZONTAL, command=get_wx)
+slider_wy = tk.Scale(window, from_=0, to=100, orient=tk.HORIZONTAL, command=get_wy)
+slider_tx = tk.Scale(window, from_=0, to=100, orient=tk.HORIZONTAL, command=get_tx)
+slider_ty = tk.Scale(window, from_=0, to=100, orient=tk.HORIZONTAL, command=get_ty)
 slider_wx.place(x=100, y=387)
 slider_wy.place(x=100, y=427)
 slider_tx.place(x=340, y=387)

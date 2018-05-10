@@ -9,56 +9,97 @@ from PIL import Image
 #IMAGE_1.paste(IMAGE_2, (0, 0), IMAGE_2)
 #IMAGE_1.save('images/img_output.png')
 
+
 def filedialog_input():
+    global file_input, img_input
+    global canvas, canvas_width, canvas_height
     file_input = askopenfilename(filetypes=(("Images files", "*.png;*.jpg"),
                                            ("Images files", "*.png;*.jpg") ))
     etr1.insert(0, file_input)
-    print('hello world1')
+    img_input = tk.PhotoImage(file=file_input)
+    calculate_watermark()
 
 def filedialog_watermark():
+    global file_WM, img_WM
+    global canvas, canvas_width, canvas_height
+    global wx, wy
     file_WM = askopenfilename(filetypes=(("Images files", "*.png;*.jpg"),
                                            ("Images files", "*.png;*.jpg") ))
     etr2.insert(0, file_WM)
-    print('hello world2')
+    img_WM = tk.PhotoImage(file=file_WM)
+    calculate_watermark()
 
 def calculate_watermark():
-    global wx, wy, canvas
+    global wx, wy, tx, ty
+    global canvas, canvas_width, canvas_height, img_input, img_WM, file_input, file_WM, scal_x, scal_y, text_input
     # Reset canvas
-    canvas.create_rectangle(0, 0, canvas_width, canvas_height, fill='#888888')
+    canvas.delete("all")
+    canvas.create_text(percent(tx, canvas_width),percent(ty, canvas_height), text=text_input)
+    if (file_input != ''):
+        canvas.create_image( canvas_width, canvas_height, image=img_input)
+        canvas.create_image(percent(wx, canvas_width),percent(wy, canvas_height), image=img_WM)
 
-    #img = tk.PhotoImage(file="images/img2.png")
-    canvas.create_image(wx,wy, image=img)
-    print('wx = %d, wy = %d'%(wx, wy))
+def saveImage():
+    write_image()
+        
+    
+def write_image():
+    global img_input, img_WM, file_input, file_WM
+    img_1 = Image.open(file_input).convert("RGBA")
+    img_2 = Image.open(file_WM).convert("RGBA")
+    img_1.paste( img_2, (0, 0), img_2)
+    img_1.save('images/img_output_2.png')
+    
+
+def percent(p, length):
+    return length*(int(p)/100)
+
+def resize(img, length):
+    width = img.width()
+    height = img.height()
+    scal_x = (img_input.width()/canvas_width) * 100
+    scal_y = (img_input.height()/canvas_height) * 100
+    img = img.resize((scal_y, scal_y), Image.ANTIALIAS)
+    return img
+
+    
 
 def get_wx(val):
     global wx
     wx = val
-    print(wx)
-    text_input = etr3.get()
-    print(text_input)
+    calculate_watermark()
 
 def get_wy(val):
     global wy
     wy = val
-    print(wy)
+    calculate_watermark()
 
 def get_tx(val):
-    global tx
+    global tx,text_input
     tx = val
-    print(tx)
+    text_input = etr3.get()
+    calculate_watermark()
 
 def get_ty(val):
-    global ty
+    global ty, text_input
     ty = val
-    print(ty)
+    text_input = etr3.get()
+    calculate_watermark()
+
+def get_text_input(val):
+    global text_input
+    text_input = val
+    calculate_watermark()
     
 
 
 file_input = ''
 file_WM = ''
 text_input = ''
-wx = 400
-wy = 400
+scal_x = 0.0
+scal_y = 0.0
+wx = 0
+wy = 0
 tx = 0
 ty = 0
 
@@ -70,14 +111,13 @@ canvas_height = 240
 window = tk.Tk()
 window.title('test')
 window.geometry('470x580')
-canvas = tk.Canvas( width=canvas_width, height=canvas_height)
-canvas.create_rectangle(0, 0, canvas_width, canvas_height, fill='#888888')
+canvas = tk.Canvas( width=canvas_width, height=canvas_height, bg='#888888')
 canvas.place(x=20, y=20)
 
 
 
 #canvas.create_image(20,20, image=img)
-img = tk.PhotoImage(file='images/img2.png')
+#img = tk.PhotoImage(file='images/img2.png')
 #Create Input Text
 text1 = tk.Label(text='Image:', font=(8))
 text1.place(x=20, y=267)
@@ -127,7 +167,7 @@ slider_tx.place(x=340, y=387)
 slider_ty.place(x=340, y=427)
 
 # Create Add Watermake Button
-btn3 = tk.Button(text='add watermark', font=(8), command=calculate_watermark)
+btn3 = tk.Button(text='add watermark', font=(8), command=saveImage)
 btn3.place(x=170, y=520)
 
 # Create Image
@@ -136,8 +176,3 @@ btn3.place(x=170, y=520)
 #img1.image = load_img
 #img1.place(x=100, y=100)
 window.mainloop()
-
-
-
-
-

@@ -1,7 +1,7 @@
 import cv2
 import tkinter as tk
 from tkinter.filedialog import askopenfilename
-from PIL import Image
+from PIL import Image, ImageFont, ImageDraw
 
 #IMAGE_1 = Image.open('images/img1.png')
 #IMAGE_2 = Image.open('images/img2.png')
@@ -48,6 +48,8 @@ def write_image():
     img_1 = Image.open(file_input).convert("RGBA")
     img_2 = Image.open(file_WM).convert("RGBA")
     img_1.paste( img_2, (0, 0), img_2)
+    draw = ImageDraw.Draw(img_1)
+    draw.text((100,100), "Hello World", fill=(255,255,0))
     img_1.save('images/img_output_2.png')
     
 
@@ -91,7 +93,6 @@ def get_text_input(val):
     text_input = val
     calculate_watermark()
     
-
 
 file_input = ''
 file_WM = ''

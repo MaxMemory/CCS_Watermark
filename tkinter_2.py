@@ -1,7 +1,7 @@
 import cv2
 import tkinter as tk
 from tkinter.filedialog import askopenfilename
-from PIL import Image, ImageFont, ImageDraw
+from PIL import Image, ImageFont, ImageDraw, ImageTk
 
 #IMAGE_1 = Image.open('images/img1.png')
 #IMAGE_2 = Image.open('images/img2.png')
@@ -13,8 +13,8 @@ from PIL import Image, ImageFont, ImageDraw
 def filedialog_input():
     global file_input, img_input
     global canvas, canvas_width, canvas_height
-    file_input = askopenfilename(filetypes=(("Images files", "*.png;*.jpg"),
-                                           ("Images files", "*.png;*.jpg") ))
+    file_input = askopenfilename(filetypes=(("Images files", "*.png;*.jpg;*.PNG;*.JPG"),
+                                           ("Images files", "*.png;*.jpg;*.PNG;*.JPG") ))
     etr1.insert(0, file_input)
     img_input = tk.PhotoImage(file=file_input)
     calculate_watermark()
@@ -23,8 +23,8 @@ def filedialog_watermark():
     global file_WM, img_WM
     global canvas, canvas_width, canvas_height
     global wx, wy
-    file_WM = askopenfilename(filetypes=(("Images files", "*.png;*.jpg"),
-                                           ("Images files", "*.png;*.jpg") ))
+    file_WM = askopenfilename(filetypes=(("Images files", "*.png;*.jpg;*.PNG;*.JPG"),
+                                           ("Images files", "*.png;*.jpg;*.PNG;*.JPG") ))
     etr2.insert(0, file_WM)
     img_WM = tk.PhotoImage(file=file_WM)
     calculate_watermark()
@@ -32,37 +32,49 @@ def filedialog_watermark():
 def calculate_watermark():
     global wx, wy, tx, ty
     global canvas, canvas_width, canvas_height, img_input, img_WM, file_input, file_WM, scal_x, scal_y, text_input
+    global img_test, img1
     # Reset canvas
     canvas.delete("all")
-    canvas.create_text(percent(tx, canvas_width),percent(ty, canvas_height), text=text_input)
     if (file_input != ''):
-        canvas.create_image( canvas_width, canvas_height, image=img_input)
-        canvas.create_image(percent(wx, canvas_width),percent(wy, canvas_height), image=img_WM)
+        #canvas.create_image(percent(wx, canvas_width),percent(wy, canvas_height), image=img_WM)
+        img_pil = write_image()
+        #img_pil.show()
+        img_tkinter = ImageTk.PhotoImage(img_pil)
+        rr = tk.Label(window, image=img_tkinter)
+        rr.pack()
+        #img_test = tk.PhotoImage(img_tkinter)
+        #canvas.create_image( canvas_width, canvas_height, image=img_test)
 
 def saveImage():
-    write_image()
+    img = write_image()
+    img.save('images/img_output_2.png')
         
     
 def write_image():
-    global img_input, img_WM, file_input, file_WM
+    global img_input, img_WM, file_input, file_WM, text_input, tx, ty, wx, wy, canvas_width, canvas_height
+    global font, img1
     img_1 = Image.open(file_input).convert("RGBA")
-    img_2 = Image.open(file_WM).convert("RGBA")
-    img_1.paste( img_2, (0, 0), img_2)
-    draw = ImageDraw.Draw(img_1)
-    draw.text((100,100), "Hello World", fill=(255,255,0))
-    img_1.save('images/img_output_2.png')
+    width, height = img_1.size
+    if (file_WM != ''):
+        img_2 = Image.open(file_WM).convert("RGBA")
+        img_1.paste( img_2, (percent(wx, width), percent(wy, height)), img_2)
+    if (text_input != ''):
+        draw = ImageDraw.Draw(img_1)
+        draw.text((percent(tx, width), percent(ty, height)), text_input, font=font, fill=(255,255,0))
+    #img_1.save('images/img_output_2.png')
+    return img_1
     
 
 def percent(p, length):
-    return length*(int(p)/100)
+    return (int)(length*(int(p)/100))
 
 def resize(img, length):
-    width = img.width()
-    height = img.height()
-    scal_x = (img_input.width()/canvas_width) * 100
-    scal_y = (img_input.height()/canvas_height) * 100
-    img = img.resize((scal_y, scal_y), Image.ANTIALIAS)
-    return img
+    #width = img.width()
+    #height = img.height()
+    #scal_x = (img_input.width()/canvas_width) * 100
+    #scal_y = (img_input.height()/canvas_height) * 100
+    #img = img.resize((scal_y, scal_y), Image.ANTIALIAS)
+    return 0
 
     
 
@@ -103,6 +115,7 @@ wx = 0
 wy = 0
 tx = 0
 ty = 0
+font = ImageFont.truetype('fonts/Nunito-Regular.ttf', 32)
 
 # 240P resolution
 canvas_width = 426

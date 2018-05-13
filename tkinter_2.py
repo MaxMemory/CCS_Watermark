@@ -32,22 +32,26 @@ def filedialog_watermark():
 def calculate_watermark():
     global wx, wy, tx, ty
     global canvas, canvas_width, canvas_height, img_input, img_WM, file_input, file_WM, scal_x, scal_y, text_input
-    global img_test, img1
+    global img_tkinter, img1
     # Reset canvas
     canvas.delete("all")
     if (file_input != ''):
         #canvas.create_image(percent(wx, canvas_width),percent(wy, canvas_height), image=img_WM)
         img_pil = write_image()
-        #img_pil.show()
-        img_tkinter = ImageTk.PhotoImage(img_pil)
-        rr = tk.Label(window, image=img_tkinter)
-        rr.pack()
+        width, height = img_pil.size
+        #img_pil.resize((100, 100))
+        img_pil.save('images/temp.png')
+        #img_tkinter = ImageTk.PhotoImage(img_pil)
+        img_tkinter = tk.PhotoImage(file='images/temp.png')
+        #rr = tk.Label(window, image=img_tkinter)
+        #rr.pack()
         #img_test = tk.PhotoImage(img_tkinter)
-        #canvas.create_image( canvas_width, canvas_height, image=img_test)
+        canvas.create_image(  width/2, height/2, image=img_tkinter)
 
 def saveImage():
     img = write_image()
     img.save('images/img_output_2.png')
+    img.show()
         
     
 def write_image():

@@ -38,15 +38,21 @@ def calculate_watermark():
     if (file_input != ''):
         #canvas.create_image(percent(wx, canvas_width),percent(wy, canvas_height), image=img_WM)
         img_pil = write_image()
-        width, height = img_pil.size
-        #img_pil.resize((100, 100))
-        img_pil.save('images/temp.png')
-        #img_tkinter = ImageTk.PhotoImage(img_pil)
-        img_tkinter = tk.PhotoImage(file='images/temp.png')
+        w1, h1 = img_pil.size
+        scale_w = canvas_width/w1
+        scale_h = canvas_height/h1
+        scale = scale_w if scale_w < scale_h else scale_h
+        width = (int)(w1*scale)
+        height = (int)(h1*scale)
+        #print('width: %f, height: %f'%(width, height))
+        img_pil = img_pil.resize((width, height))
+        #width, height = img_pil.size
+        img_pil.save('images/temp_2.png')
+        img_tkinter = tk.PhotoImage(file='images/temp_2.png')
         #rr = tk.Label(window, image=img_tkinter)
         #rr.pack()
         #img_test = tk.PhotoImage(img_tkinter)
-        canvas.create_image(  width/2, height/2, image=img_tkinter)
+        canvas.create_image(  canvas_width/2, canvas_height/2, image=img_tkinter)
 
 def saveImage():
     img = write_image()
@@ -57,7 +63,7 @@ def saveImage():
 def write_image():
     global img_input, img_WM, file_input, file_WM, text_input, tx, ty, wx, wy, canvas_width, canvas_height
     global font, img1
-    img_1 = Image.open(file_input).convert("RGBA")
+    img_1 = Image.open(file_input)
     width, height = img_1.size
     if (file_WM != ''):
         img_2 = Image.open(file_WM).convert("RGBA")
@@ -119,7 +125,7 @@ wx = 0
 wy = 0
 tx = 0
 ty = 0
-font = ImageFont.truetype('fonts/Nunito-Regular.ttf', 32)
+font = ImageFont.truetype('fonts/Nunito-Regular.ttf', 48)
 
 # 240P resolution
 canvas_width = 426

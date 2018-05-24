@@ -3,40 +3,32 @@ import tkinter as tk
 from tkinter.filedialog import askopenfilename
 from PIL import Image, ImageFont, ImageDraw, ImageTk
 
-#IMAGE_1 = Image.open('images/img1.png')
-#IMAGE_2 = Image.open('images/img2.png')
-#IMAGE_1.show()
-#IMAGE_1.paste(IMAGE_2, (0, 0), IMAGE_2)
-#IMAGE_1.save('images/img_output.png')
-
-
 def filedialog_input():
-    global file_input, img_input
+    global file_input
     global canvas, canvas_width, canvas_height
     file_input = askopenfilename(filetypes=(("Images files", "*.png;*.jpg;*.PNG;*.JPG"),
                                            ("Images files", "*.png;*.jpg;*.PNG;*.JPG") ))
     etr1.insert(0, file_input)
-    img_input = tk.PhotoImage(file=file_input)
-    calculate_watermark()
+    update_canvas()
 
 def filedialog_watermark():
-    global file_WM, img_WM
+    global file_WM
     global canvas, canvas_width, canvas_height
     global wx, wy
     file_WM = askopenfilename(filetypes=(("Images files", "*.png;*.jpg;*.PNG;*.JPG"),
                                            ("Images files", "*.png;*.jpg;*.PNG;*.JPG") ))
     etr2.insert(0, file_WM)
-    img_WM = tk.PhotoImage(file=file_WM)
-    calculate_watermark()
+    update_canvas()
 
-def calculate_watermark():
+def update_canvas():
     global wx, wy, tx, ty
-    global canvas, canvas_width, canvas_height, img_input, img_WM, file_input, file_WM, scal_x, scal_y, text_input
-    global img_tkinter, img1
-    # Reset canvas
+    global canvas, canvas_width, canvas_height
+    global file_input, file_WM, text_input
+    global scal_x, scal_y
+    global img_tkinter
+
     canvas.delete("all")
     if (file_input != ''):
-        #canvas.create_image(percent(wx, canvas_width),percent(wy, canvas_height), image=img_WM)
         img_pil = write_image()
         w1, h1 = img_pil.size
         scale_w = canvas_width/w1
@@ -44,25 +36,24 @@ def calculate_watermark():
         scale = scale_w if scale_w < scale_h else scale_h
         width = (int)(w1*scale)
         height = (int)(h1*scale)
-        #print('width: %f, height: %f'%(width, height))
         img_pil = img_pil.resize((width, height))
-        #width, height = img_pil.size
         img_pil.save('images/temp_2.png')
         img_tkinter = tk.PhotoImage(file='images/temp_2.png')
-        #rr = tk.Label(window, image=img_tkinter)
-        #rr.pack()
-        #img_test = tk.PhotoImage(img_tkinter)
         canvas.create_image(  canvas_width/2, canvas_height/2, image=img_tkinter)
+
+def showImage():
+    img = write_image()
+    img.show()
 
 def saveImage():
     img = write_image()
     img.save('images/img_output_2.png')
-    img.show()
         
-    
 def write_image():
-    global img_input, img_WM, file_input, file_WM, text_input, tx, ty, wx, wy, canvas_width, canvas_height
-    global font, img1
+    global file_input, file_WM, text_input
+    global canvas_width, canvas_height
+    global tx, ty, wx, wy
+    global font
     img_1 = Image.open(file_input)
     width, height = img_1.size
     if (file_WM != ''):
@@ -71,51 +62,43 @@ def write_image():
     if (text_input != ''):
         draw = ImageDraw.Draw(img_1)
         draw.text((percent(tx, width), percent(ty, height)), text_input, font=font, fill=(255,255,0))
-    #img_1.save('images/img_output_2.png')
     return img_1
-    
 
 def percent(p, length):
     return (int)(length*(int(p)/100))
 
-def resize(img, length):
-    #width = img.width()
-    #height = img.height()
-    #scal_x = (img_input.width()/canvas_width) * 100
-    #scal_y = (img_input.height()/canvas_height) * 100
-    #img = img.resize((scal_y, scal_y), Image.ANTIALIAS)
-    return 0
-
-    
-
 def get_wx(val):
     global wx
     wx = val
-    calculate_watermark()
+    update_canvas()
 
 def get_wy(val):
     global wy
     wy = val
-    calculate_watermark()
+    update_canvas()
 
 def get_tx(val):
     global tx,text_input
     tx = val
     text_input = etr3.get()
-    calculate_watermark()
+    update_canvas()
 
 def get_ty(val):
     global ty, text_input
     ty = val
     text_input = etr3.get()
-    calculate_watermark()
+    update_canvas()
 
 def get_text_input(val):
     global text_input
     text_input = val
-    calculate_watermark()
-    
+    update_canvas()
 
+# 240P resolution
+canvas_width = 426
+canvas_height = 240
+
+# Initialize
 file_input = ''
 file_WM = ''
 text_input = ''
@@ -125,23 +108,13 @@ wx = 0
 wy = 0
 tx = 0
 ty = 0
-font = ImageFont.truetype('fonts/Nunito-Regular.ttf', 48)
-
-# 240P resolution
-canvas_width = 426
-canvas_height = 240
-
-# Initialize
 window = tk.Tk()
 window.title('test')
 window.geometry('470x580')
 canvas = tk.Canvas( width=canvas_width, height=canvas_height, bg='#888888')
 canvas.place(x=20, y=20)
+font = ImageFont.truetype('fonts/Nunito-Regular.ttf', 48)
 
-
-
-#canvas.create_image(20,20, image=img)
-#img = tk.PhotoImage(file='images/img2.png')
 #Create Input Text
 text1 = tk.Label(text='Image:', font=(8))
 text1.place(x=20, y=267)
@@ -190,13 +163,12 @@ slider_wy.place(x=100, y=427)
 slider_tx.place(x=340, y=387)
 slider_ty.place(x=340, y=427)
 
-# Create Add Watermake Button
-btn3 = tk.Button(text='add watermark', font=(8), command=saveImage)
-btn3.place(x=170, y=520)
+# Create Show Image Button
+btn3 = tk.Button(text='Show', font=(8), command=showImage)
+btn3.place(x=200, y=520)
 
-# Create Image
-#load_img = tk.PhotoImage(file='images/img1.png')
-#img1 = tk.Label(image=load_img)
-#img1.image = load_img
-#img1.place(x=100, y=100)
+# Create Save Image Button
+#btn4 = tk.Button(text='Save', font=(8), command=saveImage)
+#btn4.place(x=250, y=520)
+
 window.mainloop()

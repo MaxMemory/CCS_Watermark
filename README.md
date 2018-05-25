@@ -2,22 +2,22 @@
 ITCS461_Computer and Communication Security
 Final Project: Watermarking
 ________________________________________________________________________________________
-Team member
+# Team member
 - Suchakree Sawangwong    Faculty of ICT, Mahidol Universit (Thailand)
 - Kittinun Aukkapinyo     Faculty of ICT, Mahidol Universit (Thailand)
 - Parintorn Pooyoi        Faculty of ICT, Mahidol Universit (Thailand)
 ________________________________________________________________________________________
-What is a Digital Watermark?
+# What is a Digital Watermark?
 A digital watermark is a kind of marker covertly embedded in a noise-tolerant signal such as an audio, video or image data. It is typically used to identify ownership of the copyright of such signal.
 ________________________________________________________________________________________
-Concept of Watermark
+# Concept of Watermark
 A digital watermark is a kind of marker covertly embedded in a noise-tolerant signal such as an audio, video or image data. It is typically used to identify ownership of the copyright of such signal.
 ________________________________________________________________________________________
-Library
+# Library
 - PIL (python library) for image processing
 - tkinter (python library) for GUI
 ________________________________________________________________________________________
-How to Use
+# How to Use
 1. Download and Unzip "run.zip" file
 2. Open "watermarking.exe" file
 3. Click "load image" button in row of Image and then select image that you want

@@ -1,0 +1,1 @@
+pyinstaller -w -F --icon=images\114515947_ICON.ico watermarking.py

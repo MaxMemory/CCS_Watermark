@@ -1,0 +1,27 @@
+missing module named resource - imported by posix, d:\Files\Work\ICT\Year 3-2\CCS\CCS_Watermark\watermarking.py
+missing module named posix - imported by os, d:\Files\Work\ICT\Year 3-2\CCS\CCS_Watermark\watermarking.py
+missing module named _posixsubprocess - imported by subprocess, d:\Files\Work\ICT\Year 3-2\CCS\CCS_Watermark\watermarking.py
+missing module named readline - imported by cmd, code, pdb, d:\Files\Work\ICT\Year 3-2\CCS\CCS_Watermark\watermarking.py
+excluded module named _frozen_importlib - imported by importlib, importlib.abc, d:\Files\Work\ICT\Year 3-2\CCS\CCS_Watermark\watermarking.py
+missing module named _frozen_importlib_external - imported by importlib._bootstrap, importlib, importlib.abc, d:\Files\Work\ICT\Year 3-2\CCS\CCS_Watermark\watermarking.py
+missing module named _winreg - imported by platform, d:\Files\Work\ICT\Year 3-2\CCS\CCS_Watermark\watermarking.py
+missing module named _scproxy - imported by urllib.request
+missing module named java - imported by platform, d:\Files\Work\ICT\Year 3-2\CCS\CCS_Watermark\watermarking.py
+missing module named 'java.lang' - imported by platform, d:\Files\Work\ICT\Year 3-2\CCS\CCS_Watermark\watermarking.py, xml.sax._exceptions
+missing module named vms_lib - imported by platform, d:\Files\Work\ICT\Year 3-2\CCS\CCS_Watermark\watermarking.py
+missing module named termios - imported by tty, d:\Files\Work\ICT\Year 3-2\CCS\CCS_Watermark\watermarking.py, getpass
+missing module named grp - imported by shutil, tarfile, pathlib, d:\Files\Work\ICT\Year 3-2\CCS\CCS_Watermark\watermarking.py
+missing module named _dummy_threading - imported by dummy_threading, d:\Files\Work\ICT\Year 3-2\CCS\CCS_Watermark\watermarking.py
+missing module named pwd - imported by posixpath, shutil, tarfile, http.server, webbrowser, pathlib, d:\Files\Work\ICT\Year 3-2\CCS\CCS_Watermark\watermarking.py, netrc, getpass
+missing module named org - imported by pickle, d:\Files\Work\ICT\Year 3-2\CCS\CCS_Watermark\watermarking.py
+missing module named 'org.python' - imported by copy, d:\Files\Work\ICT\Year 3-2\CCS\CCS_Watermark\watermarking.py, xml.sax
+missing module named cffi - imported by PIL.Image, PIL.PyAccess, PIL.ImageTk
+missing module named Tkinter - imported by PIL.ImageTk
+missing module named PIL._imagingagg - imported by PIL, PIL.ImageDraw
+missing module named UserDict - imported by PIL.PdfParser
+missing module named olefile - imported by PIL.MicImagePlugin, PIL.FpxImagePlugin
+missing module named 'PySide.QtCore' - imported by PIL.ImageQt
+missing module named 'PyQt4.QtCore' - imported by PIL.ImageQt
+missing module named 'PyQt5.QtCore' - imported by PIL.ImageQt
+missing module named pathlib2 - imported by PIL.Image
+missing module named __builtin__ - imported by PIL.Image

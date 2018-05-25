@@ -1,4 +1,3 @@
-import cv2
 import tkinter as tk
 from tkinter.filedialog import askopenfilename
 from PIL import Image, ImageFont, ImageDraw, ImageTk
@@ -37,8 +36,8 @@ def update_canvas():
         width = (int)(w1*scale)
         height = (int)(h1*scale)
         img_pil = img_pil.resize((width, height))
-        img_pil.save('images/temp_2.png')
-        img_tkinter = tk.PhotoImage(file='images/temp_2.png')
+        img_pil.save('resources/temp.png')
+        img_tkinter = tk.PhotoImage(file='resources/temp.png')
         canvas.create_image(  canvas_width/2, canvas_height/2, image=img_tkinter)
 
 def showImage():
@@ -47,7 +46,7 @@ def showImage():
 
 def saveImage():
     img = write_image()
-    img.save('images/img_output_2.png')
+    img.save('output.png')
         
 def write_image():
     global file_input, file_WM, text_input
@@ -165,10 +164,10 @@ slider_ty.place(x=340, y=427)
 
 # Create Show Image Button
 btn3 = tk.Button(text='Show', font=(8), command=showImage)
-btn3.place(x=200, y=520)
+btn3.place(x=170, y=520)
 
 # Create Save Image Button
-#btn4 = tk.Button(text='Save', font=(8), command=saveImage)
-#btn4.place(x=250, y=520)
+btn4 = tk.Button(text='Save', font=(8), command=saveImage)
+btn4.place(x=250, y=520)
 
 window.mainloop()

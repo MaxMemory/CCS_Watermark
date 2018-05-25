@@ -1,6 +1,6 @@
 # CCS_Watermark
-* ITCS461_Computer and Communication Security
-* Final Project: Watermarking
+ITCS461_Computer and Communication Security.
+Final Project: Watermarking.
 ________________________________________________________________________________________
 ### Team member
 - Suchakree Sawangwong    Faculty of ICT, Mahidol Universit (Thailand)

@@ -3,9 +3,9 @@ ITCS461_Computer and Communication Security.
 Final Project: Watermarking.
 ________________________________________________________________________________________
 ### Team member
-- Suchakree Sawangwong    Faculty of ICT, Mahidol Universit (Thailand)
-- Kittinun Aukkapinyo     Faculty of ICT, Mahidol Universit (Thailand)
-- Parintorn Pooyoi        Faculty of ICT, Mahidol Universit (Thailand)
+- Suchakree Sawangwong    Faculty of ICT, Mahidol University (Thailand)
+- Kittinun Aukkapinyo     Faculty of ICT, Mahidol University (Thailand)
+- Parintorn Pooyoi        Faculty of ICT, Mahidol University (Thailand)
 ________________________________________________________________________________________
 ### What is a Digital Watermark?
 A digital watermark is a kind of marker covertly embedded in a noise-tolerant signal such as an audio, video or image data. It is typically used to identify ownership of the copyright of such signal.
